@@ -70,7 +70,7 @@ namespace KeywordTracker
 
                     List<string> MisTitulos = new List<string>();
                     HtmlWeb oWeb = new HtmlWeb();
-                    HtmlAgilityPack.HtmlDocument doc = oWeb.LoadFromBrowser("https://www.google.com/search?q=" + url + "&start=" + paginas + "0");
+                    HtmlAgilityPack.HtmlDocument doc = oWeb.LoadFromBrowser("https://www.google.es/search?q=" + url + "&start=" + paginas + "0");
 
                     
                     foreach (var Nodo in doc.DocumentNode.CssSelect(".yuRUbf"))
@@ -144,7 +144,8 @@ namespace KeywordTracker
             {
                 for (ifor = 0; ifor < dataGridView1.Rows.Count; ifor++)
                 {
-                    int cambio = Convert.ToInt32(oSheet.Cells[ifor + 2, 3]);
+                    var cambiopo = (oSheet.Cells[ifor + 2, 3] as Microsoft.Office.Interop.Excel.Range).Value;
+                    int cambio = Convert.ToInt32(cambiopo);
                     if (cambio != Convert.ToInt32(dataGridView1.Rows[ifor].Cells[2].Value))
                     {
                         oSheet.Cells[ifor + 2, 4] = cambio - Convert.ToInt32(dataGridView1.Rows[ifor].Cells[2].Value);
