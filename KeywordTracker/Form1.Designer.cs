@@ -1,7 +1,7 @@
 ﻿
 namespace KeywordTracker
 {
-    partial class Form1
+    partial class KeywordTracker
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -30,13 +30,13 @@ namespace KeywordTracker
         private void InitializeComponent()
         {
             this.buscar = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Keyword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dominio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posihoy = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.procesar_todo = new System.Windows.Forms.Button();
+            this.btnActualizar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,20 +50,13 @@ namespace KeywordTracker
             this.buscar.UseVisualStyleBackColor = true;
             this.buscar.Click += new System.EventHandler(this.buscar_Click);
             // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(412, 22);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(376, 47);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(12, 34);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(237, 20);
             this.textBox1.TabIndex = 2;
+            this.textBox1.Text = "D:\\Keywords.xlsx";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // dataGridView1
@@ -77,7 +70,7 @@ namespace KeywordTracker
             this.posihoy});
             this.dataGridView1.Location = new System.Drawing.Point(35, 121);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(697, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(1092, 323);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -98,26 +91,36 @@ namespace KeywordTracker
             // 
             // procesar_todo
             // 
-            this.procesar_todo.Location = new System.Drawing.Point(282, 309);
+            this.procesar_todo.Location = new System.Drawing.Point(224, 477);
             this.procesar_todo.Name = "procesar_todo";
-            this.procesar_todo.Size = new System.Drawing.Size(75, 23);
+            this.procesar_todo.Size = new System.Drawing.Size(142, 49);
             this.procesar_todo.TabIndex = 4;
-            this.procesar_todo.Text = "button1";
+            this.procesar_todo.Text = "A Buscar!";
             this.procesar_todo.UseVisualStyleBackColor = true;
             this.procesar_todo.Click += new System.EventHandler(this.procesar_todo_Click);
             // 
-            // Form1
+            // btnActualizar
+            // 
+            this.btnActualizar.Location = new System.Drawing.Point(718, 477);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(142, 49);
+            this.btnActualizar.TabIndex = 5;
+            this.btnActualizar.Text = "button1";
+            this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            // 
+            // KeywordTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1203, 564);
+            this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.procesar_todo);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.buscar);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "KeywordTracker";
+            this.Text = "Keyword Tracker by JM";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -128,13 +131,13 @@ namespace KeywordTracker
         #endregion
 
         private System.Windows.Forms.Button buscar;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Keyword;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dominio;
         private System.Windows.Forms.DataGridViewTextBoxColumn posihoy;
         private System.Windows.Forms.Button procesar_todo;
+        private System.Windows.Forms.Button btnActualizar;
     }
 }
 

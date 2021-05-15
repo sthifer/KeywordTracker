@@ -1,28 +1,18 @@
-﻿
-using ExcelDataReader;
+﻿using ExcelDataReader;
 using HtmlAgilityPack;
-using Newtonsoft.Json;
 using ScrapySharp.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KeywordTracker
 {
-    public partial class Form1 : Form
+    public partial class KeywordTracker : Form
     {
-        public Form1()
+        public KeywordTracker()
         {
             InitializeComponent();
-            Cargar_Excel();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -37,7 +27,7 @@ namespace KeywordTracker
         private void Cargar_Excel()
         {
             //Ruta del fichero Excel
-            string filePath = @"C:\Users\Javier\Desktop\Keywords.xlsx";
+            string filePath = textBox1.Text;
 
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -48,7 +38,7 @@ namespace KeywordTracker
                         reader.Read();
                         while (reader.Read())
                         {
-                            dataGridView1.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+                            dataGridView1.Rows.Add(reader.GetString(0), reader.GetString(1));
                         }
                     } while (reader.NextResult());
 
@@ -57,46 +47,7 @@ namespace KeywordTracker
         }
         private void buscar_Click(object sender, EventArgs e)
         {
-
-            //System.Net.WebClient client = new WebClient();
-            //client.Headers.Add("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12");
-            //client.Headers.Add("Accept", "*/*");
-            //client.Headers.Add("Accept-Language", "en-gb,en;q=0.5");
-            //client.Headers.Add("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.7");
-
-            //string reply = client.DownloadString("https://www.google.es/search?q=navaleno+que+ver");
-
-            //var jsonresult = JsonConvert.DeserializeObject<reply>(result);
-            string url = textBox1.Text.Replace(" ","+");
-            //Console.WriteLine(reply);
-            List<string> MisTitulos = new List<string>();
-            HtmlWeb oWeb = new HtmlWeb();
-            HtmlAgilityPack.HtmlDocument doc = oWeb.LoadFromBrowser("https://www.google.com/search?q="+ url);
-
-            //HtmlNode Body = doc.DocumentNode.CssSelect("body").First();
-
-            //string sBody = Body.InnerHtml;
-
-            foreach (var Nodo in doc.DocumentNode.CssSelect(".yuRUbf"))
-            {
-                MisTitulos.Add(Nodo.InnerText);
-                //MisTutulos.Add(doc.DocumentNode.SelectNodes("<a href=").First().InnerText);
-            }
-
-            int i = 1;
-            foreach (var listado in MisTitulos)
-            {
-                //listado.Contains("jmffdftravel.es");
-                //int compara = string.Compare(listado, "jmffdftravel.es");
-                if (listado.Contains("jmtravel.es"))
-                {
-                    richTextBox1.Text = "La Key " + textBox1.Text + " se encuentra en la posición:" + i;
-                    break;
-                }
-                i++;
-            }
-
-            //Console.WriteLine(MisTutulos);
+            Cargar_Excel();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -107,39 +58,116 @@ namespace KeywordTracker
         private void procesar_todo_Click(object sender, EventArgs e)
         {
             int ifor = 0;
+            bool actualizado = false;
             for (ifor = 0; ifor < dataGridView1.Rows.Count; ifor++)
             {
                 string url = dataGridView1.Rows[ifor].Cells[0].Value.ToString().Replace(" ", "+");
                 //string url = url.Replace(" ", "+");
-                List<string> MisTitulos = new List<string>();
-                HtmlWeb oWeb = new HtmlWeb();
-                HtmlAgilityPack.HtmlDocument doc = oWeb.LoadFromBrowser("https://www.google.com/search?q=" + url);
-
-                //HtmlNode Body = doc.DocumentNode.CssSelect("body").First();
-
-                //string sBody = Body.InnerHtml;
-
-                foreach (var Nodo in doc.DocumentNode.CssSelect(".yuRUbf"))
+                actualizado = false;
+                int posi = 1;
+                for (int paginas = 0; paginas < 10; paginas++)
                 {
-                    MisTitulos.Add(Nodo.InnerText);
-                    //MisTutulos.Add(doc.DocumentNode.SelectNodes("<a href=").First().InnerText);
-                }
 
-                int i = 1;
-                foreach (var listado in MisTitulos)
-                {
-                    //listado.Contains("jmffdftravel.es");
-                    //int compara = string.Compare(listado, "jmffdftravel.es");
-                    if (listado.ToLower().Contains(dataGridView1.Rows[ifor].Cells[1].Value.ToString().ToLower()))
+                    List<string> MisTitulos = new List<string>();
+                    HtmlWeb oWeb = new HtmlWeb();
+                    HtmlAgilityPack.HtmlDocument doc = oWeb.LoadFromBrowser("https://www.google.com/search?q=" + url + "&start=" + paginas + "0");
+
+                    
+                    foreach (var Nodo in doc.DocumentNode.CssSelect(".yuRUbf"))
                     {
-                        //richTextBox1.Text += "La Key " + textBox1.Text + " se encuentra en la posición:" + i;
-                        dataGridView1.Rows[ifor].Cells[2].Value = i;
+                        //MisTitulos.Add(Nodo.InnerText);
+
+                        if (Nodo.InnerText.ToLower().Contains(dataGridView1.Rows[ifor].Cells[1].Value.ToString().ToLower()))
+                        {
+                            //if (paginas == 0)
+                            //{
+                                dataGridView1.Rows[ifor].Cells[2].Value = posi;
+                                actualizado = true;
+                            //}
+                            //else
+                            //{
+                            //    dataGridView1.Rows[ifor].Cells[2].Value = paginas + "" + posi;
+                            //    actualizado = true;
+                            //}
+                            break;
+                        }
+
+                        posi++;
+                    }
+
+                    //int i = 1;
+                    //foreach (var listado in MisTitulos)
+                    //{
+                    //    if (listado.ToLower().Contains(dataGridView1.Rows[ifor].Cells[1].Value.ToString().ToLower()))
+                    //    {
+                    //        if (paginas == 0)
+                    //        {
+                    //            dataGridView1.Rows[ifor].Cells[2].Value = i;
+                    //            actualizado = true;
+                    //        }
+                    //        else
+                    //        {
+                    //            dataGridView1.Rows[ifor].Cells[2].Value = paginas + "" + i;
+                    //            actualizado = true;
+                    //        }
+                    //        break;
+                    //    }
+                    //    i++;
+                    //}
+                    if (actualizado)
+                    {
                         break;
                     }
-                    i++;
+
+                    
+
+                }
+
+                if (!actualizado)
+                {
+                    dataGridView1.Rows[ifor].Cells[2].Value = "+100";
                 }
             }
 
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            Microsoft.Office.Interop.Excel.Application ExApp;
+            ExApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel._Workbook oWBook;
+            Microsoft.Office.Interop.Excel._Worksheet oSheet;
+            oWBook = ExApp.Workbooks.Open(textBox1.Text, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            oSheet = (Microsoft.Office.Interop.Excel._Worksheet)oWBook.ActiveSheet;
+            int ifor;
+            try
+            {
+                for (ifor = 0; ifor < dataGridView1.Rows.Count; ifor++)
+                {
+                    int cambio = Convert.ToInt32(oSheet.Cells[ifor + 2, 3]);
+                    if (cambio != Convert.ToInt32(dataGridView1.Rows[ifor].Cells[2].Value))
+                    {
+                        oSheet.Cells[ifor + 2, 4] = cambio - Convert.ToInt32(dataGridView1.Rows[ifor].Cells[2].Value);
+                    }
+                    oSheet.Cells[ifor + 2, 3] = dataGridView1.Rows[ifor].Cells[2].Value;
+
+                }
+            }
+     catch (IOException ex)
+            {
+                ExApp.Visible = false;
+                ExApp.UserControl = true;
+                oWBook.Save();
+                ExApp.Quit();
+                ExApp = null;
+            }
+            
+            ExApp.Visible = false;
+            ExApp.UserControl = true;
+            oWBook.Save();
+            //ExApp.ActiveWorkbook.Close(true, ExcelFile, Type.Missing);
+            ExApp.Quit();
+            ExApp = null;
         }
     }
 }
