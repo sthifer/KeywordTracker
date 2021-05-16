@@ -4,6 +4,7 @@ using ScrapySharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Windows.Forms;
 
 namespace KeywordTracker
@@ -28,19 +29,51 @@ namespace KeywordTracker
         {
             //Ruta del fichero Excel
             string filePath = textBox1.Text;
-
+            dataGridView1.Rows.Clear();
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    do
+
+                    var conf = new ExcelDataSetConfiguration
                     {
-                        reader.Read();
-                        while (reader.Read())
+                        ConfigureDataTable = _ => new ExcelDataTableConfiguration
                         {
-                            dataGridView1.Rows.Add(reader.GetString(0), reader.GetString(1));
+                            UseHeaderRow = true
                         }
-                    } while (reader.NextResult());
+                    };
+
+                    var dataSet = reader.AsDataSet(conf);
+                    var dataTable = dataSet.Tables[0];
+
+
+                    for (var i = 0; i < dataTable.Rows.Count; i++)
+                    {
+                        var url = $"https://free-public-api.herokuapp.com/seo_search_volume/?input=" + dataTable.Rows[i][0].ToString().Replace(" ", "+") + "&country=es";
+                        var request = (HttpWebRequest)WebRequest.Create(url);
+                        HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                        StreamReader reader2 = new StreamReader(response.GetResponseStream());
+                        string resp = reader2.ReadToEnd();
+                        //HtmlWeb oWeb = new HtmlWeb();
+                        //HtmlAgilityPack.HtmlDocument doc2 = oWeb.LoadFromBrowser("https://free-public-api.herokuapp.com/seo_search_volume/?input="+ reader.GetString(0).ToString().Replace(" ", "+") + "&country=es");
+                        dataGridView1.Rows.Add(dataTable.Rows[i][0], dataTable.Rows[i][1], dataTable.Rows[i][2], dataTable.Rows[i][3], dataTable.Rows[i][4], resp);
+                    }
+                    //do
+                    //{
+
+                    //    //reader.Read();
+                    //    //while (reader.Read())
+                    //    //{
+                    //    //    var url = $"https://free-public-api.herokuapp.com/seo_search_volume/?input=" + reader.GetString(0).ToString().Replace(" ", "+") + "&country=es";
+                    //    //    var request = (HttpWebRequest)WebRequest.Create(url);
+                    //    //    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    //    //    StreamReader reader2 = new StreamReader(response.GetResponseStream());
+                    //    //    string resp = reader2.ReadToEnd();
+                    //    //    //HtmlWeb oWeb = new HtmlWeb();
+                    //    //    //HtmlAgilityPack.HtmlDocument doc2 = oWeb.LoadFromBrowser("https://free-public-api.herokuapp.com/seo_search_volume/?input="+ reader.GetString(0).ToString().Replace(" ", "+") + "&country=es");
+                    //    //    dataGridView1.Rows.Add(reader.GetString(0), reader.GetString(1),null, null, reader., resp);
+                    //    //}
+                    //} while (reader.NextResult());
 
                 }
             }
@@ -81,7 +114,26 @@ namespace KeywordTracker
                         {
                             //if (paginas == 0)
                             //{
-                                dataGridView1.Rows[ifor].Cells[2].Value = posi;
+                            var cambiopo = dataGridView1.Rows[ifor].Cells[2].Value;
+                            var mejor = dataGridView1.Rows[ifor].Cells[4].Value;
+                            int mejornum =0;
+                            if (!string.IsNullOrEmpty(mejor.ToString())) { Convert.ToInt32(mejor); }
+                            //int mejornum = Convert.ToInt32(mejor);
+                            int cambio = Convert.ToInt32(cambiopo);
+                            if (cambio != posi)
+                            {
+                                dataGridView1.Rows[ifor].Cells[3].Value = cambio - posi;
+                            }
+                            if (mejornum > posi)
+                            {
+                                dataGridView1.Rows[ifor].Cells[4].Value = posi;
+                            }
+                            else if (mejornum == 0)
+                            {
+                                dataGridView1.Rows[ifor].Cells[4].Value = posi;
+                            }
+                            dataGridView1.Rows[ifor].Cells[2].Value = posi;
+
                                 actualizado = true;
                             //}
                             //else
@@ -125,7 +177,14 @@ namespace KeywordTracker
 
                 if (!actualizado)
                 {
+                    var cambiopo = dataGridView1.Rows[ifor].Cells[2].Value;
+                    int cambio = Convert.ToInt32(cambiopo);
+                    if (cambio != 100)
+                    {
+                        dataGridView1.Rows[ifor].Cells[3].Value = cambio - 100;
+                    }
                     dataGridView1.Rows[ifor].Cells[2].Value = "+100";
+
                 }
             }
 
@@ -151,7 +210,9 @@ namespace KeywordTracker
                         oSheet.Cells[ifor + 2, 4] = cambio - Convert.ToInt32(dataGridView1.Rows[ifor].Cells[2].Value);
                     }
                     oSheet.Cells[ifor + 2, 3] = dataGridView1.Rows[ifor].Cells[2].Value;
-
+                    oSheet.Cells[ifor + 2, 4] = dataGridView1.Rows[ifor].Cells[3].Value;
+                    oSheet.Cells[ifor + 2, 5] = dataGridView1.Rows[ifor].Cells[4].Value;
+                    oSheet.Cells[ifor + 2, 6] = dataGridView1.Rows[ifor].Cells[5].Value;
                 }
             }
      catch (IOException ex)
@@ -169,6 +230,17 @@ namespace KeywordTracker
             //ExApp.ActiveWorkbook.Close(true, ExcelFile, Type.Missing);
             ExApp.Quit();
             ExApp = null;
+        }
+
+        private void Automatico_Click(object sender, EventArgs e)
+        {
+            progressBar1.Maximum = 3;
+            buscar.PerformClick();
+            progressBar1.Value += 1;
+            procesar_todo.PerformClick();
+            progressBar1.Value += 1;
+            btnActualizar.PerformClick();
+            progressBar1.Value += 1;
         }
     }
 }

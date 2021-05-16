@@ -32,11 +32,16 @@ namespace KeywordTracker
             this.buscar = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.procesar_todo = new System.Windows.Forms.Button();
+            this.btnActualizar = new System.Windows.Forms.Button();
+            this.Automatico = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.Keyword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dominio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posihoy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.procesar_todo = new System.Windows.Forms.Button();
-            this.btnActualizar = new System.Windows.Forms.Button();
+            this.Cambio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MejorPosicion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Busquedas = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +51,7 @@ namespace KeywordTracker
             this.buscar.Name = "buscar";
             this.buscar.Size = new System.Drawing.Size(75, 23);
             this.buscar.TabIndex = 0;
-            this.buscar.Text = "button1";
+            this.buscar.Text = "Cargar Excel";
             this.buscar.UseVisualStyleBackColor = true;
             this.buscar.Click += new System.EventHandler(this.buscar_Click);
             // 
@@ -67,27 +72,15 @@ namespace KeywordTracker
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Keyword,
             this.Dominio,
-            this.posihoy});
+            this.posihoy,
+            this.Cambio,
+            this.MejorPosicion,
+            this.Busquedas});
             this.dataGridView1.Location = new System.Drawing.Point(35, 121);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1092, 323);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // Keyword
-            // 
-            this.Keyword.HeaderText = "Keyword";
-            this.Keyword.Name = "Keyword";
-            // 
-            // Dominio
-            // 
-            this.Dominio.HeaderText = "Dominio";
-            this.Dominio.Name = "Dominio";
-            // 
-            // posihoy
-            // 
-            this.posihoy.HeaderText = "Posición Hoy";
-            this.posihoy.Name = "posihoy";
             // 
             // procesar_todo
             // 
@@ -105,15 +98,66 @@ namespace KeywordTracker
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(142, 49);
             this.btnActualizar.TabIndex = 5;
-            this.btnActualizar.Text = "button1";
+            this.btnActualizar.Text = "Exportar";
             this.btnActualizar.UseVisualStyleBackColor = true;
             this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            // 
+            // Automatico
+            // 
+            this.Automatico.Location = new System.Drawing.Point(976, 32);
+            this.Automatico.Name = "Automatico";
+            this.Automatico.Size = new System.Drawing.Size(75, 23);
+            this.Automatico.TabIndex = 6;
+            this.Automatico.Text = "Automatico";
+            this.Automatico.UseVisualStyleBackColor = true;
+            this.Automatico.Click += new System.EventHandler(this.Automatico_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(166, 562);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(810, 23);
+            this.progressBar1.TabIndex = 7;
+            // 
+            // Keyword
+            // 
+            this.Keyword.HeaderText = "Keyword";
+            this.Keyword.Name = "Keyword";
+            this.Keyword.Width = 200;
+            // 
+            // Dominio
+            // 
+            this.Dominio.HeaderText = "Dominio";
+            this.Dominio.Name = "Dominio";
+            this.Dominio.Width = 200;
+            // 
+            // posihoy
+            // 
+            this.posihoy.HeaderText = "Ultima posición";
+            this.posihoy.Name = "posihoy";
+            // 
+            // Cambio
+            // 
+            this.Cambio.HeaderText = "Cambio";
+            this.Cambio.Name = "Cambio";
+            // 
+            // MejorPosicion
+            // 
+            this.MejorPosicion.HeaderText = "Mejor Posición";
+            this.MejorPosicion.Name = "MejorPosicion";
+            // 
+            // Busquedas
+            // 
+            this.Busquedas.HeaderText = "Busquedas Mensuales";
+            this.Busquedas.Name = "Busquedas";
             // 
             // KeywordTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1203, 564);
+            this.ClientSize = new System.Drawing.Size(1203, 642);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.Automatico);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.procesar_todo);
             this.Controls.Add(this.dataGridView1);
@@ -133,11 +177,16 @@ namespace KeywordTracker
         private System.Windows.Forms.Button buscar;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button procesar_todo;
+        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.Button Automatico;
+        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Keyword;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dominio;
         private System.Windows.Forms.DataGridViewTextBoxColumn posihoy;
-        private System.Windows.Forms.Button procesar_todo;
-        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cambio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MejorPosicion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Busquedas;
     }
 }
 
