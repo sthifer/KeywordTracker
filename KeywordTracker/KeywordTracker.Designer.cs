@@ -42,6 +42,11 @@ namespace KeywordTracker
             this.Cambio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MejorPosicion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Busquedas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dia1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dia2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dia3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dia4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dia5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,10 +80,16 @@ namespace KeywordTracker
             this.posihoy,
             this.Cambio,
             this.MejorPosicion,
-            this.Busquedas});
-            this.dataGridView1.Location = new System.Drawing.Point(35, 121);
+            this.Busquedas,
+            this.Dia1,
+            this.Dia2,
+            this.Dia3,
+            this.Dia4,
+            this.Dia5});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 123);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1092, 323);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(1039, 323);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -123,39 +134,80 @@ namespace KeywordTracker
             // 
             this.Keyword.HeaderText = "Keyword";
             this.Keyword.Name = "Keyword";
+            this.Keyword.ReadOnly = true;
             this.Keyword.Width = 200;
             // 
             // Dominio
             // 
             this.Dominio.HeaderText = "Dominio";
             this.Dominio.Name = "Dominio";
+            this.Dominio.ReadOnly = true;
             this.Dominio.Width = 200;
             // 
             // posihoy
             // 
             this.posihoy.HeaderText = "Ultima posición";
             this.posihoy.Name = "posihoy";
+            this.posihoy.ReadOnly = true;
             // 
             // Cambio
             // 
             this.Cambio.HeaderText = "Cambio";
             this.Cambio.Name = "Cambio";
+            this.Cambio.ReadOnly = true;
             // 
             // MejorPosicion
             // 
             this.MejorPosicion.HeaderText = "Mejor Posición";
             this.MejorPosicion.Name = "MejorPosicion";
+            this.MejorPosicion.ReadOnly = true;
             // 
             // Busquedas
             // 
             this.Busquedas.HeaderText = "Busquedas Mensuales";
             this.Busquedas.Name = "Busquedas";
+            this.Busquedas.ReadOnly = true;
+            // 
+            // Dia1
+            // 
+            this.Dia1.HeaderText = "Dia1";
+            this.Dia1.Name = "Dia1";
+            this.Dia1.ReadOnly = true;
+            this.Dia1.Width = 40;
+            // 
+            // Dia2
+            // 
+            this.Dia2.HeaderText = "Dia2";
+            this.Dia2.Name = "Dia2";
+            this.Dia2.ReadOnly = true;
+            this.Dia2.Width = 40;
+            // 
+            // Dia3
+            // 
+            this.Dia3.HeaderText = "Dia3";
+            this.Dia3.Name = "Dia3";
+            this.Dia3.ReadOnly = true;
+            this.Dia3.Width = 40;
+            // 
+            // Dia4
+            // 
+            this.Dia4.HeaderText = "Dia4";
+            this.Dia4.Name = "Dia4";
+            this.Dia4.ReadOnly = true;
+            this.Dia4.Width = 40;
+            // 
+            // Dia5
+            // 
+            this.Dia5.HeaderText = "Dia5";
+            this.Dia5.Name = "Dia5";
+            this.Dia5.ReadOnly = true;
+            this.Dia5.Width = 40;
             // 
             // KeywordTracker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1203, 642);
+            this.ClientSize = new System.Drawing.Size(1072, 610);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.Automatico);
             this.Controls.Add(this.btnActualizar);
@@ -187,6 +239,11 @@ namespace KeywordTracker
         private System.Windows.Forms.DataGridViewTextBoxColumn Cambio;
         private System.Windows.Forms.DataGridViewTextBoxColumn MejorPosicion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Busquedas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dia1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dia2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dia3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dia4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dia5;
     }
 }
 

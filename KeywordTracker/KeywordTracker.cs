@@ -18,7 +18,7 @@ namespace KeywordTracker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            textBox1.Text = Directory.GetCurrentDirectory()+ @"\Keywords.xlsx";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -56,7 +56,7 @@ namespace KeywordTracker
                         string resp = reader2.ReadToEnd();
                         //HtmlWeb oWeb = new HtmlWeb();
                         //HtmlAgilityPack.HtmlDocument doc2 = oWeb.LoadFromBrowser("https://free-public-api.herokuapp.com/seo_search_volume/?input="+ reader.GetString(0).ToString().Replace(" ", "+") + "&country=es");
-                        dataGridView1.Rows.Add(dataTable.Rows[i][0], dataTable.Rows[i][1], dataTable.Rows[i][2], dataTable.Rows[i][3], dataTable.Rows[i][4], resp);
+                        dataGridView1.Rows.Add(dataTable.Rows[i][0], dataTable.Rows[i][1], dataTable.Rows[i][2], dataTable.Rows[i][3], dataTable.Rows[i][4], resp, dataTable.Rows[i][6], dataTable.Rows[i][7], dataTable.Rows[i][8], dataTable.Rows[i][9], dataTable.Rows[i][10]);
                     }
                     //do
                     //{
@@ -213,6 +213,11 @@ namespace KeywordTracker
                     oSheet.Cells[ifor + 2, 4] = dataGridView1.Rows[ifor].Cells[3].Value;
                     oSheet.Cells[ifor + 2, 5] = dataGridView1.Rows[ifor].Cells[4].Value;
                     oSheet.Cells[ifor + 2, 6] = dataGridView1.Rows[ifor].Cells[5].Value;
+                    oSheet.Cells[ifor + 2, 7] = (oSheet.Cells[ifor + 2, 8] as Microsoft.Office.Interop.Excel.Range).Value;
+                    oSheet.Cells[ifor + 2, 8] = (oSheet.Cells[ifor + 2, 9] as Microsoft.Office.Interop.Excel.Range).Value;
+                    oSheet.Cells[ifor + 2, 9] = (oSheet.Cells[ifor + 2, 10] as Microsoft.Office.Interop.Excel.Range).Value;
+                    oSheet.Cells[ifor + 2, 10] = (oSheet.Cells[ifor + 2, 11] as Microsoft.Office.Interop.Excel.Range).Value;
+                    oSheet.Cells[ifor + 2, 11] = dataGridView1.Rows[ifor].Cells[2].Value;
                 }
             }
      catch (IOException ex)
@@ -235,6 +240,7 @@ namespace KeywordTracker
         private void Automatico_Click(object sender, EventArgs e)
         {
             progressBar1.Maximum = 3;
+            progressBar1.Value = 0;
             buscar.PerformClick();
             progressBar1.Value += 1;
             procesar_todo.PerformClick();
