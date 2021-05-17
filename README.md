@@ -1,7 +1,7 @@
 # KeywordTracker
 Aplicación para Rankear Keywords para España.
 
-Necesitarás una excel como -> https://drive.google.com/file/d/1GBPrQdo2_IKlThMzk_w4KzsO8xSm09GK/view?usp=sharing
+Necesitarás una excel como -> https://drive.google.com/file/d/1RizJSj84fFTuSGBrg1iHsMOqdMExWMEJ/view?usp=sharing
 
 Que deberás poner la ruta de donde la coloques en el primer campo.
 
