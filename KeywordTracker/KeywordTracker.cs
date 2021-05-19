@@ -30,7 +30,7 @@ namespace KeywordTracker
             //Ruta del fichero Excel
             string filePath = textBox1.Text;
             dataGridView1.Rows.Clear();
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            using (var stream = File.Open(filePath, FileMode.Open,FileAccess.Read))
             {
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
@@ -80,7 +80,7 @@ namespace KeywordTracker
         }
         private void buscar_Click(object sender, EventArgs e)
         {
-            Cargar_Excel();
+            
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -189,8 +189,125 @@ namespace KeywordTracker
             }
 
         }
+        private void procesar_todo()
+        {
+            int ifor = 0;
+            bool actualizado = false;
+            for (ifor = 0; ifor < dataGridView1.Rows.Count; ifor++)
+            {
+                if (string.IsNullOrEmpty(dataGridView1.Rows[ifor].Cells[0].Value.ToString()) || string.IsNullOrEmpty(dataGridView1.Rows[ifor].Cells[1].Value.ToString()))
+                {
+                    break;
+                }
 
-        private void btnActualizar_Click(object sender, EventArgs e)
+                string url = dataGridView1.Rows[ifor].Cells[0].Value.ToString().Replace(" ", "+");
+                //string url = url.Replace(" ", "+");
+                actualizado = false;
+                int posi = 1;
+                for (int paginas = 0; paginas < 10; paginas++)
+                {
+
+                    List<string> MisTitulos = new List<string>();
+                    HtmlWeb oWeb = new HtmlWeb();
+                    HtmlAgilityPack.HtmlDocument doc = oWeb.LoadFromBrowser("https://www.google.es/search?q=" + url + "&start=" + paginas + "0");
+
+
+                    foreach (var Nodo in doc.DocumentNode.CssSelect(".yuRUbf"))
+                    {
+                        //MisTitulos.Add(Nodo.InnerText);
+
+                        if (Nodo.InnerText.ToLower().Contains(dataGridView1.Rows[ifor].Cells[1].Value.ToString().ToLower()))
+                        {
+                            //if (paginas == 0)
+                            //{
+                            var cambiopo = dataGridView1.Rows[ifor].Cells[2].Value;
+                            var mejor = dataGridView1.Rows[ifor].Cells[4].Value;
+                            int mejornum = 0;
+                            if (!string.IsNullOrEmpty(mejor.ToString()))
+                            {
+                                mejornum = Convert.ToInt32(mejor); 
+                            }
+                            //int mejornum = Convert.ToInt32(mejor);
+                            int cambio = 0;
+                            if (!string.IsNullOrEmpty(cambiopo.ToString()))
+                            {
+                                cambio =  Convert.ToInt32(cambiopo);
+                            }
+                             
+                            if (cambio != posi && !string.IsNullOrEmpty(cambiopo.ToString()))
+                            {
+                                dataGridView1.Rows[ifor].Cells[3].Value = cambio - posi;
+                            }
+                            else
+                            {
+                                dataGridView1.Rows[ifor].Cells[3].Value = null;
+                            }
+                            if (mejornum > posi)
+                            {
+                                dataGridView1.Rows[ifor].Cells[4].Value = posi;
+                            }
+                            else if (mejornum == 0)
+                            {
+                                dataGridView1.Rows[ifor].Cells[4].Value = posi;
+                            }
+                            dataGridView1.Rows[ifor].Cells[2].Value = posi;
+
+                            actualizado = true;
+                            //}
+                            //else
+                            //{
+                            //    dataGridView1.Rows[ifor].Cells[2].Value = paginas + "" + posi;
+                            //    actualizado = true;
+                            //}
+                            break;
+                        }
+
+                        posi++;
+                    }
+
+                    //int i = 1;
+                    //foreach (var listado in MisTitulos)
+                    //{
+                    //    if (listado.ToLower().Contains(dataGridView1.Rows[ifor].Cells[1].Value.ToString().ToLower()))
+                    //    {
+                    //        if (paginas == 0)
+                    //        {
+                    //            dataGridView1.Rows[ifor].Cells[2].Value = i;
+                    //            actualizado = true;
+                    //        }
+                    //        else
+                    //        {
+                    //            dataGridView1.Rows[ifor].Cells[2].Value = paginas + "" + i;
+                    //            actualizado = true;
+                    //        }
+                    //        break;
+                    //    }
+                    //    i++;
+                    //}
+                    if (actualizado)
+                    {
+                        break;
+                    }
+
+
+
+                }
+
+                if (!actualizado)
+                {
+                    var cambiopo = dataGridView1.Rows[ifor].Cells[2].Value;
+                    int cambio = Convert.ToInt32(cambiopo);
+                    if (cambio != 100)
+                    {
+                        dataGridView1.Rows[ifor].Cells[3].Value = cambio - 100;
+                    }
+                    dataGridView1.Rows[ifor].Cells[2].Value = "+100";
+
+                }
+            }
+
+        }
+        private void Actualizar()
         {
             Microsoft.Office.Interop.Excel.Application ExApp;
             ExApp = new Microsoft.Office.Interop.Excel.Application();
@@ -241,11 +358,11 @@ namespace KeywordTracker
         {
             progressBar1.Maximum = 3;
             progressBar1.Value = 0;
-            buscar.PerformClick();
+            Cargar_Excel();
             progressBar1.Value += 1;
-            procesar_todo.PerformClick();
+            procesar_todo();
             progressBar1.Value += 1;
-            btnActualizar.PerformClick();
+            Actualizar();
             progressBar1.Value += 1;
         }
     }
