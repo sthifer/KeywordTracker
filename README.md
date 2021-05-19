@@ -1,10 +1,16 @@
 # KeywordTracker
-Aplicación para Rankear Keywords para España.
+Aplicación para Rankear Keywords para España. SÓLO válida para Windows.
 
-Necesitarás una excel como -> https://drive.google.com/file/d/1GBPrQdo2_IKlThMzk_w4KzsO8xSm09GK/view?usp=sharing
+Nos descargamos el ZIP de esta ruta: https://drive.google.com/drive/folders/10kGpmIcVAItiZY2vrEda8HUcOGFTsAoK?usp=sharing
 
-Que deberás poner la ruta de donde la coloques en el primer campo.
+Lo descomprimimos donde queramos guardar la aplicación, ya que no necesita instalación.
 
-Una vez coloques la ruta junto al nombre del excel puede usar el botón Automatico para procesarlo.
+Junto a los archivos que has descargado, va una excel que es donde deberás rellenar las keywords que quieres trackear y el dominio. Como está la de ejemplo.
 
-Una vez finalizado puedes consultar la misma excel o la ventana del programa
+Aquí tendrás que ir rellenando tus keywords y tu dominio.
+
+Deberás poner la excel en la ruta de la aplicación (tal y como viene ya en la descarga), si la pones en otra ruta tendrás que actualizarlo en el campo de arriba para que el programa sepa donde está.
+
+Ahora abrimos la aplicación y usamos botón "Procesar" para procesarlo. (Importante, la excel debe estar cerrada para que el programa pueda escribir en ella.)
+
+Una vez finalizado (puedes ver la barra de progreso abajo) puedes consultar la misma excel o la ventana del programa.
