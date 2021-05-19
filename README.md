@@ -1,5 +1,5 @@
 # KeywordTracker
-Aplicación para Rankear Keywords para España. SÓLO valida para Windows.
+Aplicación para Rankear Keywords para España. SÓLO válida para Windows.
 
 Nos descargamos el ZIP de esta ruta: https://drive.google.com/drive/folders/10kGpmIcVAItiZY2vrEda8HUcOGFTsAoK?usp=sharing
 
