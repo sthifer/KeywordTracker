@@ -11,6 +11,6 @@ Aquí tendrás que ir rellenando tus keywords y tu dominio.
 
 Deberás poner la excel en la ruta de la aplicación (tal y como viene ya en la descarga), si la pones en otra ruta tendrás que actualizarlo en el campo de arriba para que el programa sepa donde está.
 
-Ahora abrimos la aplicación y usamos botón "Procesar" para procesarlo.
+Ahora abrimos la aplicación y usamos botón "Procesar" para procesarlo. (Importante, la excel debe estar cerrada para que el programa pueda escribir en ella.)
 
 Una vez finalizado (puedes ver la barra de progreso abajo) puedes consultar la misma excel o la ventana del programa.
