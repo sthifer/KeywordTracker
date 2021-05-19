@@ -296,8 +296,13 @@ namespace KeywordTracker
                 if (!actualizado)
                 {
                     var cambiopo = dataGridView1.Rows[ifor].Cells[2].Value;
-                    int cambio = Convert.ToInt32(cambiopo);
-                    if (cambio != 100)
+                    //int cambio = Convert.ToInt32(cambiopo);
+                    int cambio = 0;
+                    if (!string.IsNullOrEmpty(cambiopo.ToString()))
+                    {
+                        cambio = Convert.ToInt32(cambiopo);
+                    }
+                    if (cambio != 100 && cambio!=0)
                     {
                         dataGridView1.Rows[ifor].Cells[3].Value = cambio - 100;
                     }
